@@ -6,7 +6,7 @@
 
 XENO is not a traditional sales CRM. It's a **marketing and shopper engagement OS** that empowers D2C brands to:
 
-- 🎯 Manage and understand shoppers at scale
+- 🏢 Manage and understand shoppers at scale
 - 🧠 Create intelligent, AI-driven audience segments
 - ✍️ Generate campaign copy with AI in seconds
 - 📊 Simulate and track campaign delivery realtime
