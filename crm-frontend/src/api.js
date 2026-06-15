@@ -1,4 +1,4 @@
-const CRM_API_URL = 'http://localhost:5000/api';
+const CRM_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export async function fetchCustomers() {
   const res = await fetch(`${CRM_API_URL}/customers`);

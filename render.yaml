@@ -1,0 +1,41 @@
+services:
+  # 1. Channel Service (Simulated delivery webhook dispatcher)
+  - type: web
+    name: xeno-channel-service
+    env: node
+    rootDir: channel-service
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: false
+
+  # 2. CRM Express Backend (MongoDB memory server, segment engine, AI strategist)
+  - type: web
+    name: xeno-crm-backend
+    env: node
+    rootDir: crm-backend
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: false
+    envVars:
+      - key: CHANNEL_SERVICE_URL
+        fromService:
+          name: xeno-channel-service
+          type: web
+          property: host
+
+  # 3. CRM Frontend (Tailwind v4, Zustand, Recharts, Framer Motion)
+  - type: web
+    name: xeno-crm-frontend
+    env: static
+    rootDir: crm-frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    autoDeploy: false
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: xeno-crm-backend
+          type: web
+          property: host
+        # Append /api route to backend host for client fetch queries
+        # Note: Render provides the raw host (e.g., https://xeno-crm-backend.onrender.com)
