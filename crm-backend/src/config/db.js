@@ -4,21 +4,33 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 let mongod = null;
 
 async function connectDB() {
-  try {
-    let dbUrl = process.env.MONGODB_URI;
+  let dbUrl = process.env.MONGODB_URI;
 
-    if (!dbUrl) {
-      console.log("No MONGODB_URI environment variable detected.");
-      console.log("Launching local in-memory MongoDB server instance...");
-      mongod = await MongoMemoryServer.create();
-      dbUrl = mongod.getUri();
-      console.log(`Local MongoDB server running at: ${dbUrl}`);
+  if (dbUrl) {
+    console.log(`Attempting to connect to custom MongoDB: ${dbUrl}`);
+    try {
+      // Set a 3-second timeout for connection selection so we fail fast if server is stopped
+      await mongoose.connect(dbUrl, {
+        serverSelectionTimeoutMS: 3000
+      });
+      console.log("MongoDB connected successfully using Mongoose.");
+      return;
+    } catch (err) {
+      console.warn(`[DB Warn] Failed to connect to local MongoDB (${err.message}).`);
+      console.warn("Falling back to local in-memory MongoDB server instance...");
     }
+  }
 
-    await mongoose.connect(dbUrl);
-    console.log("MongoDB connected successfully using Mongoose.");
+  // Fallback / Default: Spin up Memory Server
+  try {
+    console.log("Initializing local in-memory MongoDB server...");
+    mongod = await MongoMemoryServer.create();
+    const memoryUri = mongod.getUri();
+    
+    await mongoose.connect(memoryUri);
+    console.log(`Local In-Memory MongoDB running & connected at: ${memoryUri}`);
   } catch (err) {
-    console.error("MongoDB connection failed:", err.message);
+    console.error("Critical: Failed to launch fallback MongoDB Memory Server:", err.message);
     process.exit(1);
   }
 }
