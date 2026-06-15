@@ -1,0 +1,17 @@
+{
+  "name": "crm-backend",
+  "version": "1.0.0",
+  "description": "Production-Grade D2C Marketing CRM Backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb-memory-server": "^10.1.2",
+    "mongoose": "^8.9.2"
+  }
+}

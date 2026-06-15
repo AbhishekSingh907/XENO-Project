@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+crm-backend/node_modules/
+channel-service/node_modules/
+crm-frontend/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Database & temp files
+crm-backend/data/*.json
+crm-backend/data/*.tmp
+*.tmp
+.DS_Store
+
+# Build output
+dist/
+crm-frontend/dist/
+.env

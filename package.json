@@ -1,0 +1,12 @@
+{
+  "name": "xeno-mini-crm",
+  "version": "1.0.0",
+  "description": "AI-Native Mini CRM with Asynchronous Delivery Channel Simulation",
+  "scripts": {
+    "install:all": "npm install --prefix crm-backend && npm install --prefix channel-service && npm install --prefix crm-frontend",
+    "dev": "npx concurrently \"npm run dev --prefix crm-backend\" \"npm run dev --prefix channel-service\" \"npm run dev --prefix crm-frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
